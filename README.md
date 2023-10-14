@@ -1,0 +1,2 @@
+# fast-gpt
+gpt
