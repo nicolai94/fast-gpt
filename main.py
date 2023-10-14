@@ -6,12 +6,15 @@ from gpt import ask_gpt
 app = FastAPI()
 
 
+class RequestText(BaseModel):
+    text: str
+
+
 class GPTResponse(BaseModel):
     answer: str
 
 
-@app.get("/ask")
-def ask(text: str) -> GPTResponse:
-    result = ask_gpt(text)
-    print(f'{result=}')
+@app.post("/ask", response_model=GPTResponse, summary="Задать вопрос")
+def ask(data: RequestText) -> GPTResponse:
+    result = ask_gpt(data.text)
     return GPTResponse(answer=result)
